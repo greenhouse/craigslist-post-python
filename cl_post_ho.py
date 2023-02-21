@@ -43,13 +43,12 @@ Screened in balcony, overlooking private garden.
 
 Tenant responsible for electric and cable/internet.
 First, last and security required to move in.
-Credit score 700+ and background check screening required.
 
 Agents welcome!
 """
 str_i_4 = "2100"
 str_i_5 = "1018"
-str_i_6 = "Wed, 1 Mar 2023"
+str_i_6 = "15" # march 15th
 str_i_7 = "temp37373737@gmail.com"
 str_i_8 = "160 nw 70th Street"
 str_i_9 = "70th Street and 2nd Ave"
@@ -70,7 +69,8 @@ img_path_10 = "01616_MVrjnqJqQqz_0t20CI_600x450.jpg"
 #------------------------------------------------------------#
 #------------------------------------------------------------#
 
-print('\n\nInitializing client...')
+cl_time_start = datetime.now().strftime("%H:%M:%S.%f")
+print(f'\n\nInitializing client... start: {cl_time_start[0:-4]}')
 CLIENT = webdriver.Firefox()
 
 print('Navigating to craigslist')
@@ -192,14 +192,14 @@ CLIENT.find_element(By.NAME, "no_smoking").click()
 CLIENT.find_element(By.NAME, "airconditioning").click()
 print('selecting right side checkboxes... DONE')
 
-print('searching for available on date, march "1"')
+print('searching for available on date, march "15"')
 CLIENT.find_element(By.CSS_SELECTOR, ".movein_date").click() # click datepicker
-CLIENT.find_element(By.CSS_SELECTOR, ".ui-datepicker-next").click() # click next month
+CLIENT.find_element(By.CSS_SELECTOR, ".ui-datepicker-next").click() # click next month once (to march)
 elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-state-default")
 for i,e in enumerate(elements): # loop to find 1st day of month
     text = elements[i].text
     print(f'... found elements[i] text = {text}')
-    if text == "1": # month date
+    if text == str_i_6: # month date
         print(f'clicking {text}')
         elements[i].click()
         break
@@ -211,8 +211,8 @@ CLIENT.find_element(By.NAME, "xstreet0").send_keys(str_i_8)
 CLIENT.find_element(By.NAME, "xstreet1").send_keys(str_i_9)
 CLIENT.find_element(By.NAME, "city").send_keys(str_i_10)
 
-print(f'waiting 2 before clicking "continue"')
-time.sleep(2)
+print(f'waiting... {WAIT_TIME} before clicking "continue"')
+time.sleep(WAIT_TIME)
 print(f'clicking "continue"...')
 CLIENT.find_element(By.NAME, "go").click()
 
@@ -264,7 +264,12 @@ time.sleep(WAIT_TIME)
 print(f'clicking "publish"... ')
 CLIENT.find_element(By.NAME, "go").click()
 
-print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n\n')
+print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n')
+
+cl_time_end = datetime.now().strftime("%H:%M:%S.%f")
+print(f'start: {cl_time_start[0:-4]}')
+print(f'end:   {cl_time_end[0:-4]}\n\n')
+
 
 #ref: https://www.selenium.dev/selenium/docs/api/py/_modules/selenium/webdriver/common/by.html#By
 #ref: https://github.com/SeleniumHQ/selenium/blob/a4995e2c096239b42c373f26498a6c9bb4f2b3e7/py/CHANGES
