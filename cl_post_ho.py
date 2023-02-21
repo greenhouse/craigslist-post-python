@@ -252,7 +252,7 @@ while len(figure_el_child) > 0:
 print('... uploading images ... DONE')
 print(f'len(figure_el_child) = {len(figure_el_child)}')
 c_time_end = datetime.now().strftime("%H:%M:%S.%f")
-print(f'selecting images... DONE -> \n   start: {c_time_start[0:-4]}\n   end: {c_time_end[0:-4]}')
+print(f'selecting images... DONE -> \n   start: {c_time_start[0:-4]}\n   end:   {c_time_end[0:-4]}')
 
 print(f'waiting {WAIT_TIME} before clicking "done with images"...')
 time.sleep(WAIT_TIME)
