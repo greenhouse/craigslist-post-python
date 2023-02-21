@@ -4,13 +4,14 @@ import sys, argparse, string, ctypes, os, re
 #import urllib, urllib2, cookielib, httplib
 #import cookielib, time, base64
 import time
+from datetime import datetime
 
-from os import path
-from bs4 import BeautifulSoup
+#from os import path
+#from bs4 import BeautifulSoup
 from selenium import webdriver
 from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 from selenium.webdriver.firefox.firefox_profile import FirefoxProfile
-from selenium.webdriver.common.action_chains import ActionChains
+#from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -21,13 +22,15 @@ from selenium.common.exceptions import NoSuchElementException
 #import spintax
 
 #------------------------------------------------------------#
+#   GLOBALS                                                  #
+#------------------------------------------------------------#
 WAIT_TIME = 1 #sec
 str_i_0 = "2br/2ba - East Boca Condo for Rent"
 str_i_1 = "Boca Raton"
 str_i_2 = "33487"
 str_i_3 = """
 Condo for rent in Banyan Park Boca Raton, 33487
-$2,200/month; 1018sqft (2 bed / 2 bath)
+$2,100/month; 1018sqft (2 bed / 2 bath)
 
 Ideal location in east Boca Raton.
 Close to beaches, dining, collages and transportation.
@@ -44,13 +47,27 @@ Credit score 700+ and background check screening required.
 
 Agents welcome!
 """
-str_i_4 = "2200"
+str_i_4 = "2100"
 str_i_5 = "1018"
 str_i_6 = "Wed, 1 Mar 2023"
 str_i_7 = "temp37373737@gmail.com"
 str_i_8 = "160 nw 70th Street"
 str_i_9 = "70th Street and 2nd Ave"
 str_i_10 = "Boca Raton"
+#------------------------------------------------------------#
+img_path_folder = "_env/boca_ad"
+img_path_0 = "0__image0.jpg"
+img_path_1 = "0_00E0E_Mx7XY9fIg8z_0CI0pg_600x450.jpg"
+img_path_2 = "00d0d_6cU9WQsRd9Mz_0t20CI_600x450.jpg"
+img_path_3 = "00D0D_e6xjBgy8IVGz_0CI0t2_600x450.jpg"
+img_path_4 = "00L0L_8mOOAj2CaLoz_0t20CI_600x450.jpg"
+img_path_5 = "00U0U_9akydFNSLPNz_0t20CI_600x450.jpg"
+img_path_6 = "00v0v_lT7n4oWvmPEz_0sP0CI_600x450.jpg"
+img_path_7 = "00505_3HncxQXU7VRz_0t20CI_600x450.jpg"
+img_path_8 = "00505_4WlwB71yzMwz_0t20CI_600x450.jpg"
+img_path_9 = "00606_eOO5SR0Xh56z_0t20CI_600x450.jpg"
+img_path_10 = "01616_MVrjnqJqQqz_0t20CI_600x450.jpg"
+#------------------------------------------------------------#
 #------------------------------------------------------------#
 
 print('\n\nInitializing client...')
@@ -119,6 +136,7 @@ for i,v in enumerate(sel_menu_els):
     sel_menu_els[i].click()
     elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-menu-item")
     
+    #ref: https://stackoverflow.com/a/18079918/2298002
     sel_menu_el_par = sel_menu_els[i].find_element(By.XPATH, "..")
     sel_menu_el_par_id = sel_menu_el_par.get_attribute("id")
     if sel_menu_el_par_id == 'ui-id-1-button':
@@ -186,18 +204,67 @@ for i,e in enumerate(elements): # loop to find 1st day of month
         elements[i].click()
         break
 
+print('setting email & street address')
 CLIENT.find_element(By.NAME, "FromEMail").send_keys(str_i_7)
 CLIENT.find_element(By.NAME, "show_address_ok").click() # check box
 CLIENT.find_element(By.NAME, "xstreet0").send_keys(str_i_8)
 CLIENT.find_element(By.NAME, "xstreet1").send_keys(str_i_9)
 CLIENT.find_element(By.NAME, "city").send_keys(str_i_10)
 
-print(f'waiting 3 before clicking "continue"')
-time.sleep(3) #wait 1 before click 'continue'
+print(f'waiting 2 before clicking "continue"')
+time.sleep(2)
 print(f'clicking "continue"...')
 CLIENT.find_element(By.NAME, "go").click()
 
-print('_ DONE\n\n')
+print(f'waiting {WAIT_TIME} before clicking "continue" from map screen')
+time.sleep(WAIT_TIME)
+print(f'clicking "continue"... from map screen')
+CLIENT.find_element(By.CSS_SELECTOR, ".continue").click()
+
+c_time_start = datetime.now().strftime("%H:%M:%S.%f")
+print(f'selecting images... -> {c_time_start[0:-4]}')
+#ref: https://stackoverflow.com/a/70547723/2298002
+#ref: https://stackoverflow.com/a/10472542/2298002
+#ref: https://stackoverflow.com/a/74014300/2298002
+    #choose_image=driver.find_element(By.ID, 'id')
+    #choose_image.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
+    #choose_img.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
+input_el_par = CLIENT.find_element(By.CSS_SELECTOR, ".moxie-shim")
+input_el_child = input_el_par.find_element(By.TAG_NAME, "input")
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_0)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_1)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_2)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_3)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_4)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_5)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_6)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_7)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_8)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_9)
+input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_10)
+figure_el_par = CLIENT.find_element(By.ID, "uploader")
+figure_el_child = figure_el_par.find_elements(By.TAG_NAME, "figure")
+print(f'len(figure_el_child) = {len(figure_el_child)}')
+print('... uploading images ...')
+while len(figure_el_child) > 0:
+    figure_el_child = figure_el_par.find_elements(By.TAG_NAME, "figure")
+    #print(f'len(figure_el_child) = {len(figure_el_child)}')
+print('... uploading images ... DONE')
+print(f'len(figure_el_child) = {len(figure_el_child)}')
+c_time_end = datetime.now().strftime("%H:%M:%S.%f")
+print(f'selecting images... DONE -> \n   start: {c_time_start[0:-4]}\n   end: {c_time_end[0:-4]}')
+
+print(f'waiting {WAIT_TIME} before clicking "done with images"...')
+time.sleep(WAIT_TIME)
+print(f'clicking "done with images"... ')
+CLIENT.find_element(By.CSS_SELECTOR, ".done").click()
+
+print(f'waiting {WAIT_TIME} before clicking "publish"...')
+time.sleep(WAIT_TIME)
+print(f'clicking "publish"... ')
+CLIENT.find_element(By.NAME, "go").click()
+
+print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n\n')
 
 #ref: https://www.selenium.dev/selenium/docs/api/py/_modules/selenium/webdriver/common/by.html#By
 #ref: https://github.com/SeleniumHQ/selenium/blob/a4995e2c096239b42c373f26498a6c9bb4f2b3e7/py/CHANGES

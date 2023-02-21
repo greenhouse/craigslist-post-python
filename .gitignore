@@ -25,7 +25,7 @@ logs/
 
 ## hide environmentals
 .env*
-
+_env/
 ## hide legacy helpers
 _legacy/
 
