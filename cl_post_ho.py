@@ -72,14 +72,16 @@ img_path_9 = "00606_eOO5SR0Xh56z_0t20CI_600x450.jpg"
 img_path_10 = "01616_MVrjnqJqQqz_0t20CI_600x450.jpg"
 #------------------------------------------------------------#
 #------------------------------------------------------------#
+GO_TIME_START = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+print(f'\n\nGO_TIME_START: {GO_TIME_START}')
+
 iPost_cnt = 4
 x = 1
 while x <= iPost_cnt:
     print(f'\n\n creating CL post # {x}')
-    x += 1
     
-    cl_time_start = datetime.now().strftime("%H:%M:%S.%f")
-    print(f'\n\nInitializing client... start: {cl_time_start[0:-4]}')
+    cl_time_start = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+    print(f'\n\nInitializing client... start: {cl_time_start}')
     CLIENT = webdriver.Firefox()
 
     print('Navigating to craigslist')
@@ -275,9 +277,16 @@ while x <= iPost_cnt:
 
     print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n')
 
-    cl_time_end = datetime.now().strftime("%H:%M:%S.%f")
-    print(f'start: {cl_time_start[0:-4]}')
-    print(f'end:   {cl_time_end[0:-4]}\n\n')
+    cl_time_end = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+    print(f'start: {cl_time_start}')
+    print(f'end:   {cl_time_end}')
+    
+    print(f'\n\n creating CL post # {x} _ DONE _')
+    x += 1
+    
+GO_TIME_END = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+print(f'\n\nGO_TIME_START: {GO_TIME_START}')
+print(f'GO_TIME_END:   {GO_TIME_END}')
 
 
 #ref: https://www.selenium.dev/selenium/docs/api/py/_modules/selenium/webdriver/common/by.html#By
