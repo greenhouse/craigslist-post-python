@@ -1,4 +1,10 @@
 #!/usr/bin/env python
+__filename = 'cl_post_ho.py'
+__fname = 'cl_post_ho'
+cStrDividerExcept = '***************************************************************'
+cStrDivider = '#================================================================#'
+print('', cStrDivider, f'START _ {__filename}', cStrDivider, sep='\n')
+print(f'GO {__filename} -> starting IMPORTs and globals decleration')
 
 import sys, argparse, string, ctypes, os, re
 #import urllib, urllib2, cookielib, httplib
@@ -75,219 +81,244 @@ img_path_10 = "01616_MVrjnqJqQqz_0t20CI_600x450.jpg"
 GO_TIME_START = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
 print(f'\n\nGO_TIME_START: {GO_TIME_START}')
 
-iPost_cnt = 4
-x = 1
-while x <= iPost_cnt:
-    print(f'\n\n creating CL post # {x}')
-    
-    cl_time_start = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
-    print(f'\n\nInitializing client... start: {cl_time_start}')
-    CLIENT = webdriver.Firefox()
+i_POST_CNT = 4
 
-    print('Navigating to craigslist')
-    CLIENT.get("https://miami.craigslist.org/search/pbc/apa#search=1~list~0~0")
 
-    print('clicking "post"')
-    CLIENT.find_element(By.CSS_SELECTOR, ".cl-goto-post").click()
-
-    print(f'waiting... {WAIT_TIME}')
-    time.sleep(WAIT_TIME)
-
-    print('searching for palm beach co "3"')
-    elements = CLIENT.find_elements(By.NAME, "n")
-    for i,e in enumerate(elements):
-        v = elements[i].get_attribute("value")
-        print(f"... found elements[i] value = {v}")
-        if v == "3":
-            print(f"clicking {v}")
-            elements[i].click()
-            break
-            
-    print(f'waiting... {WAIT_TIME}')
-    time.sleep(WAIT_TIME)
-
-    print('searching for housing offered "ho"')
-    elements = CLIENT.find_elements(By.NAME, "id")
-    for i,e in enumerate(elements):
-        v = elements[i].get_attribute("value")
-        print(f"... found elements[i] value = {v}")
-        if v == "ho":
-            print(f"clicking {v}")
-            elements[i].click()
-            break
-            
-    print(f'waiting... {WAIT_TIME}')
-    time.sleep(WAIT_TIME)
-
-    print('searching for apartments "1"')
-    elements = CLIENT.find_elements(By.NAME, "id")
-    for i,e in enumerate(elements):
-        v = elements[i].get_attribute("value")
-        print(f'... found elements[i] value = {v}')
-        if v == "1":
-            print(f'clicking {v}')
-            elements[i].click()
-            break
-            
-    print(f'waiting... {WAIT_TIME}')
-    time.sleep(WAIT_TIME)
-
-    print(f'filling in text field details...')
-    CLIENT.find_element(By.ID, "PostingTitle").send_keys(str_i_0)
-    CLIENT.find_element(By.ID, "geographic_area").send_keys(str_i_1)
-    CLIENT.find_element(By.ID, "postal_code").send_keys(str_i_2)
-    CLIENT.find_element(By.ID, "PostingBody").send_keys(str_i_3)
-    CLIENT.find_element(By.NAME, "price").send_keys(str_i_4)
-    CLIENT.find_element(By.NAME, "surface_area").clear() # delete default 0
-    CLIENT.find_element(By.NAME, "surface_area").send_keys(str_i_5)
-
-    print('searching through 9 ui-selectmenu-text')
-    sel_menu_els = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-selectmenu-text")
-    for i,v in enumerate(sel_menu_els):
-        sel_menu_els[i].click()
-        elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-menu-item")
+def go(i_cnt):
+    x = 1
+    while x <= i_cnt:
+        print(f'\n\n creating CL post # {x}')
         
-        #ref: https://stackoverflow.com/a/18079918/2298002
-        sel_menu_el_par = sel_menu_els[i].find_element(By.XPATH, "..")
-        sel_menu_el_par_id = sel_menu_el_par.get_attribute("id")
-        if sel_menu_el_par_id == 'ui-id-1-button':
-            print('searching for rent per "month"')
-            for i,e in enumerate(elements):
-                text = elements[i].text
-                print(f'... found elements[i] text = {text}')
-                if text == "month":
-                    print(f'clicking {text}')
-                    elements[i].click()
-                    break
-        if sel_menu_el_par_id == 'ui-id-2-button':
-            pass
-        if sel_menu_el_par_id == 'ui-id-3-button':
-            print("searching for laundy 'w/d in unit'")
-            for i,e in enumerate(elements):
-                text = elements[i].text
-                print(f'... found elements[i] text = {text}')
-                if text == "w/d in unit":
-                    print(f'clicking {text}')
-                    elements[i].click()
-                    break
-        if sel_menu_el_par_id == 'ui-id-4-button':
-            print("searching for parking 'off-street parking'")
-            for i,e in enumerate(elements):
-                text = elements[i].text
-                print(f'... found elements[i] text = {text}')
-                if text == "off-street parking":
-                    print(f'clicking {text}')
-                    elements[i].click()
-                    break
-        if sel_menu_el_par_id == 'ui-id-5-button':
-            print("searching for bedrooms '2'")
-            for i,e in enumerate(elements):
-                text = elements[i].text
-                print(f'... found elements[i] text = {text}')
-                if text == "2":
-                    print(f'clicking {text}')
-                    elements[i].click()
-                    break
-        if sel_menu_el_par_id == 'ui-id-6-button':
-            print("searching for bathrooms '2'")
-            for i,e in enumerate(elements):
-                text = elements[i].text
-                print(f'... found elements[i] text = {text}')
-                if text == "2":
-                    print(f'clicking {text}')
-                    elements[i].click()
-                    break
+        cl_time_start = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+        print(f'\n\nInitializing client... start: {cl_time_start}')
+        CLIENT = webdriver.Firefox()
 
-    print('selecting right side checkboxes...')
-    CLIENT.find_element(By.NAME, "no_smoking").click()
-    CLIENT.find_element(By.NAME, "airconditioning").click()
-    print('selecting right side checkboxes... DONE')
+        print('Navigating to craigslist')
+        CLIENT.get("https://miami.craigslist.org/search/pbc/apa#search=1~list~0~0")
 
-    print('searching for available on date, march "15"')
-    CLIENT.find_element(By.CSS_SELECTOR, ".movein_date").click() # click datepicker
-    CLIENT.find_element(By.CSS_SELECTOR, ".ui-datepicker-next").click() # click next month once (to march)
-    elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-state-default")
-    for i,e in enumerate(elements): # loop to find 1st day of month
-        text = elements[i].text
-        print(f'... found elements[i] text = {text}')
-        if text == str_i_6: # month date
-            print(f'clicking {text}')
-            elements[i].click()
-            break
+        print('clicking "post"')
+        CLIENT.find_element(By.CSS_SELECTOR, ".cl-goto-post").click()
 
-    print('setting email & street address')
-    CLIENT.find_element(By.NAME, "FromEMail").send_keys(str_i_7)
-    CLIENT.find_element(By.NAME, "show_address_ok").click() # check box
-    CLIENT.find_element(By.NAME, "xstreet0").send_keys(str_i_8)
-    CLIENT.find_element(By.NAME, "xstreet1").send_keys(str_i_9)
-    CLIENT.find_element(By.NAME, "city").send_keys(str_i_10)
+        print(f'waiting... {WAIT_TIME}')
+        time.sleep(WAIT_TIME)
 
-    print(f'waiting... {WAIT_TIME} before clicking "continue"')
-    time.sleep(WAIT_TIME)
-    print(f'clicking "continue"...')
-    CLIENT.find_element(By.NAME, "go").click()
+        print('searching for palm beach co "3"')
+        elements = CLIENT.find_elements(By.NAME, "n")
+        for i,e in enumerate(elements):
+            v = elements[i].get_attribute("value")
+            print(f"... found elements[i] value = {v}")
+            if v == "3":
+                print(f"clicking {v}")
+                elements[i].click()
+                break
+                
+        print(f'waiting... {WAIT_TIME}')
+        time.sleep(WAIT_TIME)
 
-    print(f'waiting {WAIT_TIME} before clicking "continue" from map screen')
-    time.sleep(WAIT_TIME)
-    print(f'clicking "continue"... from map screen')
-    CLIENT.find_element(By.CSS_SELECTOR, ".continue").click()
+        print('searching for housing offered "ho"')
+        elements = CLIENT.find_elements(By.NAME, "id")
+        for i,e in enumerate(elements):
+            v = elements[i].get_attribute("value")
+            print(f"... found elements[i] value = {v}")
+            if v == "ho":
+                print(f"clicking {v}")
+                elements[i].click()
+                break
+                
+        print(f'waiting... {WAIT_TIME}')
+        time.sleep(WAIT_TIME)
 
-    c_time_start = datetime.now().strftime("%H:%M:%S.%f")
-    print(f'selecting images... -> {c_time_start[0:-4]}')
-    #ref: https://stackoverflow.com/a/70547723/2298002
-    #ref: https://stackoverflow.com/a/10472542/2298002
-    #ref: https://stackoverflow.com/a/74014300/2298002
-        #choose_image=driver.find_element(By.ID, 'id')
-        #choose_image.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
-        #choose_img.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
-    input_el_par = CLIENT.find_element(By.CSS_SELECTOR, ".moxie-shim")
-    input_el_child = input_el_par.find_element(By.TAG_NAME, "input")
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_0)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_1)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_2)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_3)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_4)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_5)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_6)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_7)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_8)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_9)
-    input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_10)
-    figure_el_par = CLIENT.find_element(By.ID, "uploader")
-    figure_el_child = figure_el_par.find_elements(By.TAG_NAME, "figure")
-    print(f'len(figure_el_child) = {len(figure_el_child)}')
-    print('... uploading images ...')
-    while len(figure_el_child) > 0:
+        print('searching for apartments "1"')
+        elements = CLIENT.find_elements(By.NAME, "id")
+        for i,e in enumerate(elements):
+            v = elements[i].get_attribute("value")
+            print(f'... found elements[i] value = {v}')
+            if v == "1":
+                print(f'clicking {v}')
+                elements[i].click()
+                break
+                
+        print(f'waiting... {WAIT_TIME}')
+        time.sleep(WAIT_TIME)
+
+        print(f'filling in text field details...')
+        CLIENT.find_element(By.ID, "PostingTitle").send_keys(str_i_0)
+        CLIENT.find_element(By.ID, "geographic_area").send_keys(str_i_1)
+        CLIENT.find_element(By.ID, "postal_code").send_keys(str_i_2)
+        CLIENT.find_element(By.ID, "PostingBody").send_keys(str_i_3)
+        CLIENT.find_element(By.NAME, "price").send_keys(str_i_4)
+        CLIENT.find_element(By.NAME, "surface_area").clear() # delete default 0
+        CLIENT.find_element(By.NAME, "surface_area").send_keys(str_i_5)
+
+        print('searching through 9 ui-selectmenu-text')
+        sel_menu_els = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-selectmenu-text")
+        for i,v in enumerate(sel_menu_els):
+            sel_menu_els[i].click()
+            elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-menu-item")
+            
+            #ref: https://stackoverflow.com/a/18079918/2298002
+            sel_menu_el_par = sel_menu_els[i].find_element(By.XPATH, "..")
+            sel_menu_el_par_id = sel_menu_el_par.get_attribute("id")
+            if sel_menu_el_par_id == 'ui-id-1-button':
+                print('searching for rent per "month"')
+                for i,e in enumerate(elements):
+                    text = elements[i].text
+                    print(f'... found elements[i] text = {text}')
+                    if text == "month":
+                        print(f'clicking {text}')
+                        elements[i].click()
+                        break
+            if sel_menu_el_par_id == 'ui-id-2-button':
+                pass
+            if sel_menu_el_par_id == 'ui-id-3-button':
+                print("searching for laundy 'w/d in unit'")
+                for i,e in enumerate(elements):
+                    text = elements[i].text
+                    print(f'... found elements[i] text = {text}')
+                    if text == "w/d in unit":
+                        print(f'clicking {text}')
+                        elements[i].click()
+                        break
+            if sel_menu_el_par_id == 'ui-id-4-button':
+                print("searching for parking 'off-street parking'")
+                for i,e in enumerate(elements):
+                    text = elements[i].text
+                    print(f'... found elements[i] text = {text}')
+                    if text == "off-street parking":
+                        print(f'clicking {text}')
+                        elements[i].click()
+                        break
+            if sel_menu_el_par_id == 'ui-id-5-button':
+                print("searching for bedrooms '2'")
+                for i,e in enumerate(elements):
+                    text = elements[i].text
+                    print(f'... found elements[i] text = {text}')
+                    if text == "2":
+                        print(f'clicking {text}')
+                        elements[i].click()
+                        break
+            if sel_menu_el_par_id == 'ui-id-6-button':
+                print("searching for bathrooms '2'")
+                for i,e in enumerate(elements):
+                    text = elements[i].text
+                    print(f'... found elements[i] text = {text}')
+                    if text == "2":
+                        print(f'clicking {text}')
+                        elements[i].click()
+                        break
+
+        print('selecting right side checkboxes...')
+        CLIENT.find_element(By.NAME, "no_smoking").click()
+        CLIENT.find_element(By.NAME, "airconditioning").click()
+        print('selecting right side checkboxes... DONE')
+
+        print('searching for available on date, march "15"')
+        CLIENT.find_element(By.CSS_SELECTOR, ".movein_date").click() # click datepicker
+        CLIENT.find_element(By.CSS_SELECTOR, ".ui-datepicker-next").click() # click next month once (to march)
+        elements = CLIENT.find_elements(By.CSS_SELECTOR, ".ui-state-default")
+        for i,e in enumerate(elements): # loop to find 1st day of month
+            text = elements[i].text
+            print(f'... found elements[i] text = {text}')
+            if text == str_i_6: # month date
+                print(f'clicking {text}')
+                elements[i].click()
+                break
+
+        print('setting email & street address')
+        CLIENT.find_element(By.NAME, "FromEMail").send_keys(str_i_7)
+        CLIENT.find_element(By.NAME, "show_address_ok").click() # check box
+        CLIENT.find_element(By.NAME, "xstreet0").send_keys(str_i_8)
+        CLIENT.find_element(By.NAME, "xstreet1").send_keys(str_i_9)
+        CLIENT.find_element(By.NAME, "city").send_keys(str_i_10)
+
+        print(f'waiting... {WAIT_TIME} before clicking "continue"')
+        time.sleep(WAIT_TIME)
+        print(f'clicking "continue"...')
+        CLIENT.find_element(By.NAME, "go").click()
+
+        print(f'waiting {WAIT_TIME} before clicking "continue" from map screen')
+        time.sleep(WAIT_TIME)
+        print(f'clicking "continue"... from map screen')
+        CLIENT.find_element(By.CSS_SELECTOR, ".continue").click()
+
+        c_time_start = datetime.now().strftime("%H:%M:%S.%f")
+        print(f'selecting images... -> {c_time_start[0:-4]}')
+        #ref: https://stackoverflow.com/a/70547723/2298002
+        #ref: https://stackoverflow.com/a/10472542/2298002
+        #ref: https://stackoverflow.com/a/74014300/2298002
+            #choose_image=driver.find_element(By.ID, 'id')
+            #choose_image.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
+            #choose_img.send_keys(os.path.join(os.getcwd(), 'image.jpg'))
+        input_el_par = CLIENT.find_element(By.CSS_SELECTOR, ".moxie-shim")
+        input_el_child = input_el_par.find_element(By.TAG_NAME, "input")
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_0)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_1)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_2)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_3)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_4)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_5)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_6)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_7)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_8)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_9)
+        input_el_child.send_keys(os.getcwd() + '/' + img_path_folder + '/' + img_path_10)
+        figure_el_par = CLIENT.find_element(By.ID, "uploader")
         figure_el_child = figure_el_par.find_elements(By.TAG_NAME, "figure")
-        #print(f'len(figure_el_child) = {len(figure_el_child)}')
-    print('... uploading images ... DONE')
-    print(f'len(figure_el_child) = {len(figure_el_child)}')
-    c_time_end = datetime.now().strftime("%H:%M:%S.%f")
-    print(f'selecting images... DONE -> \n   start: {c_time_start[0:-4]}\n   end:   {c_time_end[0:-4]}')
+        print(f'len(figure_el_child) = {len(figure_el_child)}')
+        print('... uploading images ...')
+        while len(figure_el_child) > 0:
+            figure_el_child = figure_el_par.find_elements(By.TAG_NAME, "figure")
+            #print(f'len(figure_el_child) = {len(figure_el_child)}')
+        print('... uploading images ... DONE')
+        print(f'len(figure_el_child) = {len(figure_el_child)}')
+        c_time_end = datetime.now().strftime("%H:%M:%S.%f")
+        print(f'selecting images... DONE -> \n   start: {c_time_start[0:-4]}\n   end:   {c_time_end[0:-4]}')
 
-    print(f'waiting {WAIT_TIME} before clicking "done with images"...')
-    time.sleep(WAIT_TIME)
-    print(f'clicking "done with images"... ')
-    CLIENT.find_element(By.CSS_SELECTOR, ".done").click()
+        print(f'waiting {WAIT_TIME} before clicking "done with images"...')
+        time.sleep(WAIT_TIME)
+        print(f'clicking "done with images"... ')
+        CLIENT.find_element(By.CSS_SELECTOR, ".done").click()
 
-    print(f'waiting {WAIT_TIME} before clicking "publish"...')
-    time.sleep(WAIT_TIME)
-    print(f'clicking "publish"... ')
-    CLIENT.find_element(By.NAME, "go").click()
+        print(f'waiting {WAIT_TIME} before clicking "publish"...')
+        time.sleep(WAIT_TIME)
+        print(f'clicking "publish"... ')
+        CLIENT.find_element(By.NAME, "go").click()
 
-    print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n')
+        print(f'\n\nDONE creating post\n check email verifation: {str_i_7}\n')
 
-    cl_time_end = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
-    print(f'start: {cl_time_start}')
-    print(f'end:   {cl_time_end}')
+        cl_time_end = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+        print(f'start: {cl_time_start}')
+        print(f'end:   {cl_time_end}')
+        
+        print(f'\n\n creating CL post # {x} _ DONE _')
+        x += 1
+
+def readCliArgs():
+    funcname = f'<{__filename}> readCliArgs'
+    #print(f'\n{funcname} _ ENTER\n')
+    print(f'\nReading CLI args...')
+    argCnt = len(sys.argv)
+    print(' Number of arguments: %i' % argCnt)
+    print(' Argument List: %s' % str(sys.argv))
+    for idx, val in enumerate(sys.argv):
+        print(' Argv[%i]: %s' % (idx,str(sys.argv[idx])))
+    print(f'DONE reading CLI args...')
+
+if __name__ == "__main__":
+    readCliArgs()
+    argCnt = len(sys.argv)
+    if argCnt > 1:
+        i_POST_CNT = int(sys.argv[1])
+    else:
+        i_POST_CNT = i_POST_CNT
+        
+    print(f'\n\ni_POST_CNT: {i_POST_CNT}')
+    go(i_POST_CNT)
+    print(f'\n\ni_POST_CNT: {i_POST_CNT}')
     
-    print(f'\n\n creating CL post # {x} _ DONE _')
-    x += 1
-    
-GO_TIME_END = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
-print(f'\n\nGO_TIME_START: {GO_TIME_START}')
-print(f'GO_TIME_END:   {GO_TIME_END}')
-
+    GO_TIME_END = datetime.now().strftime("%H:%M:%S.%f")[0:-4]
+    print(f'\n\nGO_TIME_START: {GO_TIME_START}')
+    print(f'GO_TIME_END:   {GO_TIME_END}')
 
 #ref: https://www.selenium.dev/selenium/docs/api/py/_modules/selenium/webdriver/common/by.html#By
 #ref: https://github.com/SeleniumHQ/selenium/blob/a4995e2c096239b42c373f26498a6c9bb4f2b3e7/py/CHANGES
