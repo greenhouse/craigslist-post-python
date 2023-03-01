@@ -36,7 +36,7 @@ str_i_1 = "Boca Raton"
 str_i_2 = "33487"
 str_i_3 = """
 Condo for rent in Banyan Park Boca Raton, 33487
-$2,200/month; 1018sqft (2 bed / 2 bath)
+$2,300/month; 1018sqft (2 bed / 2 bath)
 
 Ideal location in east Boca Raton.
 Close to beaches, dining, collages and transportation.
@@ -56,7 +56,7 @@ HOA requires $150 application fee
 
 Agents welcome!
 """
-str_i_4 = "2200"
+str_i_4 = "2300"
 str_i_5 = "1018"
 str_i_6 = "15" # march 15th
 str_i_7 = "temp37373737@gmail.com"
