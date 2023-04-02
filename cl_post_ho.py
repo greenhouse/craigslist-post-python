@@ -12,6 +12,11 @@ import sys, argparse, string, ctypes, os, re
 import time
 from datetime import datetime
 
+''' requirements
+    ref: https://github.com/SeleniumHQ/selenium/blob/trunk/py/docs/source/index.rst
+     $ python3 -m pip install -U selenium
+'''
+
 #from os import path
 #from bs4 import BeautifulSoup
 from selenium import webdriver
