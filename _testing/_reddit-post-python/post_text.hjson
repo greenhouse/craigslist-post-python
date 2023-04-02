@@ -1,0 +1,131 @@
+{
+    "selftext":
+        '''
+        <table class='posts'>
+        <tbody>
+        <tr>
+        <!-- fix_022323: new images permalink (no 'clipart/') -->
+        <!-- <td class='image'><img src='/content/clipart/PA_2023' alt='Need Bookkeeper / Personal Assistant to Start ASAP! - Call 212-889-7505 Greenhouse Agcy Ltd.' align='left' /> -->
+        <td class='image'><img src='/content/PA_2023' alt='Need Bookkeeper / Personal Assistant to Start ASAP! - Call 212-889-7505 Greenhouse Agcy Ltd.' align='left' />
+        </td>
+        <td>
+        <table class='jobs'>
+        <tbody>
+        
+        <!-- ID -->
+        <tr style='display: true;'>
+        <td class='green'>ID</td>
+        <td> 8797 </td>
+        </tr>
+        
+        <!-- Position -->
+        <tr style='display: true;'>
+        <td class='green'>Position</td>
+        <td> Bookkeeper / Personal Assistant </td>
+        </tr>
+        
+        <!-- Schedule  | Flexibility -->
+        <tr style='display: true;'>
+        <td class='green'> Schedule </td>
+        <td> Monday to Thursday 9am to 6pm and Friday 9-5 </td>
+        </tr>
+        
+        <!-- Location -->
+        <tr style='display: true;'>
+        <td class='green'>Location</td>
+        <td> Upper East Side </td>
+        </tr>
+        
+        <!-- Salary -->
+        <tr style='display: true;'>
+        <td class='green'>Salary</td>
+        <td> $90K year </td>
+        </tr>
+        
+        <!-- Family consists -->
+        <tr style='display: none;'>
+        <td class='green'>Family consists</td>
+        <td>  </td>
+        </tr>
+        
+        <!-- Family provides -->
+        <tr style='display: none;'>
+        <td class='green'>Family provides</td>
+        <td>  </td>
+        </tr>
+        
+        <!-- Current Staff -->
+        <tr style='display: true;'>
+        <td class='green'>Current Staff</td>
+        <td> Fully staffed </td>
+        </tr>
+        
+        <!-- Requirements -->
+        <tr style='display: true;'>
+        <td class='green'>Summary</td>
+        <td> Bookkeeper / Personal Assistant Needed! NYC </td>
+        </tr>
+        
+        <tr style='display: true;'>
+        <td class='green'>Job Info</td>
+        <td>
+        <b><u>Requirement/Duties:</u></b>
+        <br>
+        <ul>
+        This position requires someone who has long term reference/experience working for a High End families.
+
+    * Great computer skills/Tech Savvy
+    * Strong organization skills
+    * Strong communication skills (verbal & written)
+    * Detail Oriented
+    * Available to create from general appointments to arranging family birthdays and travel arrangements, events, etc.
+    * Administrative work, billing, checkbooks, filing, bank reconciliations, preparing reports, payroll system, etc.
+    * Quickbooks, Excel, Word knowledge
+    * Care for vendors, contractors
+
+    Candidate must have excellent written and verbal communication skills. As well as: be tech savvy, have tremendous organization skills & able to multitask.
+
+
+
+        </ul>
+        
+        <!-- Footer -->
+        Interviews will be this week and job starts A.S.A.P.
+        <b>***We must have verifiable references who we can contact!***</b>
+        <br><br>
+        
+        <!-- fix_022223: request 'GMS 2-15-2023.pdf' -->
+        <!-- If you are this perfect person, we would love to meet you! -->
+        <!-- Send resumes! email yulia@greenhousestaffing.com OR call 212-889-7505 -->
+        <!-- <br><br> -->
+        
+        <!-- Footer Contact
+        ghafle = greenhou app form Lorenz
+        ghafgg = greenhou app form Leticia
+        ghafyg = greenhou app form Yulia
+        ghaftd = greenhou app form Tsering -->
+        
+        <i>As a Domestic Staffing Agency, we strive to present Qualified Candidates!</i></b>
+        <br><br><br>
+        
+        For more information, please call yulia at (212) 889-7505 or email at <a href='mailto: yulia@greenhousestaffing.com'> yulia@greenhousestaffing.com </a>, or click the <a href='http://www.greenhousestaffing.com/content/ghafyg '>'Apply'</a> button below.
+        
+        <!-- Footer Button -->
+        <div style='height: 23px;'></div>
+        <div class='apply'><a href='http://www.greenhousestaffing.com/content/ghafyg'></a></div>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        </td>
+        </tr>
+        </tbody>
+        </table>
+        
+        <!-- Footer Additional -->
+        <center>
+        <img style='margin: 0; padding: 0;' src='/content/images/ornament.png' alt='Need Candidate to Start ASAP! - Contact us at Greenhouse Agcy Ltd.' border='0' /></center>
+        '''
+    
+    
+}
